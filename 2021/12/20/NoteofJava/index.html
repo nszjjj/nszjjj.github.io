@@ -676,7 +676,9 @@
 <p>封装、多态、继承的特性<br>向上转型、向下转型<br>String类、   equals（）比较<br>方法重载、方法重写各自的特点以及相互的区别<br>抽象类的继承<br>接口的实现方法<br>内部类的定义及使用</p>
 <h2 id="5">5.Java的窗体设计类JFrame</h2>
 
-<p>使用窗体设计类JFrame设计相关功能的窗体</p>
+<blockquote>
+<p>使用窗体设计类JFrame设计相关功能的窗体，您需要import javax.swing.JFrame;</p>
+</blockquote>
 <h2 id="6">6.Java的异常（exception）</h2>
 
 <h3 id="6-1-异常的分类"><a href="#6-1-异常的分类" class="headerlink" title="6.1 异常的分类"></a>6.1 异常的分类</h3><p>异常处理被设计用于保证代码的质量，降低后期维护的难度和便于开发过程中的测试。</p>
@@ -759,6 +761,11 @@ C[Exception] --> E[checked exception]</pre>
 <li>创建一个异常对象。该对象可以由用户写入一些异常相关的信息。</li>
 <li>将这个异常对象传给调用者并结束当前方法的执行。</li>
 </ol>
+<p>另外，当方法的调用者也无法处理异常时应当继续抛出，直到主函数抛给JVM这里是不用人为进行处理的，但是在用户自己编写的语句若无法处理是应当进一步抛出的。</p>
+<p>请注意，throw仅能够抛出可抛出类Throwable或者其子类的实例对象。类似于下面的代码是不对的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> String(<span class="string">&quot;exception&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>此外，父类方法没有抛出异常，子类重写父类该方法时也不可抛出异常。此时子类产生该异常，只能捕获处理，不能声明抛出。</p>
 <p>throw语句的使用请结合下一小节的第一个实例。</p>
 <h3 id="6-3-异常的捕获"><a href="#6-3-异常的捕获" class="headerlink" title="6.3 异常的捕获"></a>6.3 异常的捕获</h3><p>在Java中如果需要处理异常，必须先对异常进行捕获。</p>
 <blockquote>
@@ -814,6 +821,10 @@ C[Exception] --> E[checked exception]</pre>
 <blockquote>
 <p>输出：<br>[Exception] Cannot find a.txt<br>finally块代码运行<br>程序运行完毕</p>
 </blockquote>
+<h3 id="6-5-出现在方法声明中的throws"><a href="#6-5-出现在方法声明中的throws" class="headerlink" title="6.5 出现在方法声明中的throws"></a>6.5 出现在方法声明中的throws</h3><blockquote>
+<p>请区分throws和throw的区别，它俩是不一样的。</p>
+</blockquote>
+<p>throws表示出现异常的一种可能性，并不一定会发生这些异常。这些异常将交由该方法的调用者处理，并且允许throws后面跟多个异常类型。</p>
 
       </div>
       <div class="post-tags-categories">
@@ -853,18 +864,19 @@ C[Exception] --> E[checked exception]</pre>
 
 
 
+
+
   
-  <div class="post-nav-prev post-nav-item">
+  <div class="post-nav-next post-nav-item">
     <div class="post-nav-img" style="background-size: cover; 
       background-position: center center;">
-      <img class="lazyload lazyload placeholder" src="/medias/14.jpg" class="lazyload placeholder" data-srcset="/medias/14.jpg" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="">
+      <img class="lazyload lazyload placeholder" src="/medias/14.jpg" class="lazyload placeholder" data-srcset="/medias/14.jpg" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" src="" alt="">
     </div>
     <a href="/2021/12/20/NoteofCpp/" class="post-nav-link">
       <div class="title">
-        <i class="fas fa-angle-left"></i> Prev:
+        Next: <i class="fas fa-angle-right"></i>
         <div class="title-text">李二狗的C++备考笔记</div>
       </div>
-      
       <!-- <div class="content">
         BinaryDog Lee’s Note of C++
 作者数媒李二狗。（P.S.能不能star一下…）
@@ -873,8 +885,6 @@ catalo
       </div> -->
     </a>
   </div>
-
-
 
 </div>
 
