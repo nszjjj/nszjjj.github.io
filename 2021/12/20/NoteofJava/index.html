@@ -680,9 +680,32 @@
 <h2 id="6">6.Java的异常（exception）</h2>
 
 <h3 id="6-1-异常的分类"><a href="#6-1-异常的分类" class="headerlink" title="6.1 异常的分类"></a>6.1 异常的分类</h3><p>异常处理被设计用于保证代码的质量，降低后期维护的难度和便于开发过程中的测试。</p>
-<p>java的异常被当做对象处理，根类是java.lang.Throwable类，并分为两大类：<br>|类别|是否可处理|遇到后的操作|<br>|–|–|–|<br>|Error|无法处理|JVM会选择终止程序|<br>|Exception|可以处理|人为编写代码捕获异常并处理|</p>
+<p>java的异常被当做对象处理，根类是java.lang.Throwable类，并分为两大类：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>是否可处理</th>
+<th>遇到后的操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Error</td>
+<td>无法处理</td>
+<td>JVM会选择终止程序</td>
+</tr>
+<tr>
+<td>Exception</td>
+<td>可以处理</td>
+<td>人为编写代码捕获异常并处理</td>
+</tr>
+</tbody></table>
 <p>java的异常一览：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">A[throwable] --&gt; B[Error]</span><br><span class="line">A --&gt; C[Exception]</span><br><span class="line">C[Exception] --&gt; D[unchecked exception]</span><br><span class="line">C[Exception] --&gt; E[checked exception]</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TD
+A[throwable] --> B[Error]
+A --> C[Exception]
+C[Exception] --> D[unchecked exception]
+C[Exception] --> E[checked exception]</pre>
 <p>关于Exception的下属分类说明见下表：</p>
 <table>
 <thead>
@@ -830,19 +853,18 @@
 
 
 
-
-
   
-  <div class="post-nav-next post-nav-item">
+  <div class="post-nav-prev post-nav-item">
     <div class="post-nav-img" style="background-size: cover; 
       background-position: center center;">
-      <img class="lazyload lazyload placeholder" src="/medias/14.jpg" class="lazyload placeholder" data-srcset="/medias/14.jpg" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" src="" alt="">
+      <img class="lazyload lazyload placeholder" src="/medias/14.jpg" class="lazyload placeholder" data-srcset="/medias/14.jpg" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="">
     </div>
     <a href="/2021/12/20/NoteofCpp/" class="post-nav-link">
       <div class="title">
-        Next: <i class="fas fa-angle-right"></i>
+        <i class="fas fa-angle-left"></i> Prev:
         <div class="title-text">李二狗的C++备考笔记</div>
       </div>
+      
       <!-- <div class="content">
         BinaryDog Lee’s Note of C++
 作者数媒李二狗。（P.S.能不能star一下…）
@@ -851,6 +873,8 @@ catalo
       </div> -->
     </a>
   </div>
+
+
 
 </div>
 
