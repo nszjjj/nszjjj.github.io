@@ -492,7 +492,7 @@
     
       
         <span class="post-detail-header_date">
-          <i class="fas fa-calendar"></i> Published in：2021-12-20 |
+          <i class="fas fa-calendar"></i> Published in：2021-12-24 |
         </span>
       
 
@@ -665,20 +665,232 @@
 
 <p>相应地，可以使用isDirectory()来判断是否是一个路径</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">File f1 = <span class="keyword">new</span> File(<span class="string">&quot;D:/javacode/image1.jpg&quot;</span>);</span><br><span class="line">File f2 = <span class="keyword">new</span> File(<span class="string">&quot;xxx&quot;</span>);</span><br><span class="line">System.out.println(f1.isDirectory()); <span class="comment">// 结果是false</span></span><br><span class="line">System.out.println(f1.isDirectory()); <span class="comment">// 结果是false</span></span><br></pre></td></tr></table></figure>
-<p>类似的应用还有delete()删除文件<br>|方法名|功能|<br>|-|-|<br>|public boolean mkdir()|创建目录(已存在或上级目录存在返回false)|<br>|public boolean mkdirs()|同上，但是路径不存在会自动创建|<br>|public String[] list()|获取其中包含的各种文件的名字|<br>|public boolean renameTo(File dest)|重命名|</p>
+<p>类似的应用还有delete()删除文件</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>public boolean mkdir()</td>
+<td>创建目录(已存在或上级目录存在返回false)</td>
+</tr>
+<tr>
+<td>public boolean mkdirs()</td>
+<td>同上，但是路径不存在会自动创建</td>
+</tr>
+<tr>
+<td>public String[] list()</td>
+<td>获取其中包含的各种文件的名字</td>
+</tr>
+<tr>
+<td>public boolean renameTo(File dest)</td>
+<td>重命名</td>
+</tr>
+</tbody></table>
 <h3 id="2-5文件读写"><a href="#2-5文件读写" class="headerlink" title="2.5文件读写"></a>2.5文件读写</h3><h2 id="3">3.Java的代码结构</h2>
 
 <h3 id="3-1-静态代码块"><a href="#3-1-静态代码块" class="headerlink" title="3.1 静态代码块"></a>3.1 静态代码块</h3><blockquote>
 <p>核心要义：静态代码块随着类的加载而执行，而且只执行一次</p>
 </blockquote>
-<h3 id="3-2-构造代码块"><a href="#3-2-构造代码块" class="headerlink" title="3.2 构造代码块"></a>3.2 构造代码块</h3><h3 id="3-3-构造方法"><a href="#3-3-构造方法" class="headerlink" title="3.3 构造方法"></a>3.3 构造方法</h3><h3 id="3-4-普通代码"><a href="#3-4-普通代码" class="headerlink" title="3.4 普通代码"></a>3.4 普通代码</h3><h3 id="3-5-在继承关系下，程序执行的顺序问题"><a href="#3-5-在继承关系下，程序执行的顺序问题" class="headerlink" title="3.5 在继承关系下，程序执行的顺序问题"></a>3.5 在继承关系下，程序执行的顺序问题</h3><h2 id="4">4.Java的面向对象</h2>
+<p>静态代码块长这个样子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span>&#123;</span><br><span class="line">    <span class="comment">//...anything</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类似地还有非静态代码块</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">//...anything   </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这类代码块一般出现在主函数外面使用，位置可以随便放，它不在任何的方法体内，JVM加载类时会执行这些静态的代码块，如果static代码块有多个，JVM将按照它们在类中出现的先后顺序依次执行它们，每个代码块只会被执行一次。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;静态代码块2&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;静态代码块1&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123; </span><br><span class="line">		System.out.println(<span class="string">&quot;主函数运行&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出:</span></span><br><span class="line"><span class="comment">//静态代码块2</span></span><br><span class="line"><span class="comment">//静态代码块1</span></span><br><span class="line"><span class="comment">//主函数运行</span></span><br></pre></td></tr></table></figure>
+
+<p>其中不难看出如下信息：</p>
+<ol>
+<li>静态代码块按照书写先后顺序执行</li>
+<li>静态代码块先于主函数内容执行</li>
+</ol>
+<p>此外要强调的是，静态代码块不能存在任何方法体中，放在构造代码块中也不行。</p>
+<h3 id="3-2-构造代码块"><a href="#3-2-构造代码块" class="headerlink" title="3.2 构造代码块"></a>3.2 构造代码块</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123; </span><br><span class="line">		System.out.println(<span class="string">&quot;主函数运行&quot;</span>);</span><br><span class="line">		Base a = <span class="keyword">new</span> Base();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;父类构造代码块&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;父类静态代码块&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	Base()&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;父类构造方法&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>观察本例，你可以看到输出如下：</p>
+<blockquote>
+<p>主函数运行<br>父类静态代码块<br>父类构造代码块<br>父类构造方法</p>
+</blockquote>
+<p>综上所示不难看出：</p>
+<ol>
+<li>构造代码块不是构造方法</li>
+<li>构造代码块先于构造方法执行</li>
+<li>静态代码块先于构造代码块执行</li>
+</ol>
+<p>构造代码块可以做什么：例如统计该类实例化多少次</p>
+<h3 id="3-3-构造方法"><a href="#3-3-构造方法" class="headerlink" title="3.3 构造方法"></a>3.3 构造方法</h3><blockquote>
+<p>构造方法的一个直观类比就是Cpp的构造函数</p>
+</blockquote>
+<p>构造方法是类生成实例时调用的方法。</p>
+<p>关于构造方法有以下常见的几个问题：</p>
+<ol>
+<li>构造方法有返回值吗？<blockquote>
+<p>构造方法没有返回值</p>
+</blockquote>
+</li>
+<li>构造方法可以有参数吗？<blockquote>
+<p>可以。有参数的叫做有参构造方法，无参数的叫做无参构造方法</p>
+</blockquote>
+</li>
+<li>我在编写类时可以不为之编写构造方法吗？<blockquote>
+<p>可以。但是系统会自动添加无参的构造方法。但是如果有手动书写，不论写的是否是无参的，系统都不会在自动添加。</p>
+</blockquote>
+</li>
+<li>构造方法可以被继承吗？<blockquote>
+<p>不可以。但是您可以使用super()来调用父类的构造方法。</p>
+</blockquote>
+</li>
+<li>构造方法可以重载吗<blockquote>
+<p>可以。</p>
+</blockquote>
+</li>
+<li>构造方法可以直接被调用吗？<blockquote>
+<p>不可以，构造方法只能通过new运算符在创建对象时自动调用。</p>
+</blockquote>
+</li>
+<li>构造方法一般用来干什么？<blockquote>
+<p>初始化实例的值。</p>
+</blockquote>
+</li>
+</ol>
+<p>此外，构造方法不能够被static、final、synchronized、abstract和native修饰。</p>
+<p>在java中普通函数可以和构造函数同名，但是必须带有返回值。</p>
+<h3 id="3-4-普通代码"><a href="#3-4-普通代码" class="headerlink" title="3.4 普通代码"></a>3.4 普通代码</h3><p>普通代码块在方法体中定义，执行顺序按书写先后。</p>
+<p>综上几节所述，不难看出执行顺序：</p>
+<blockquote>
+<p>静态代码块&gt;构造代码块&gt;构造函数&gt;普通代码块</p>
+</blockquote>
+<h3 id="3-5-在继承关系下，程序执行的顺序问题"><a href="#3-5-在继承关系下，程序执行的顺序问题" class="headerlink" title="3.5 在继承关系下，程序执行的顺序问题"></a>3.5 在继承关系下，程序执行的顺序问题</h3><p>重点理解一个概念：</p>
+<p>子类实例化需要调用子类的构造方法，但是调用子类构造方法之前需要先调用父类构造方法。调用父类构造方法将父类已有的属性初始化，然后在调用子类构造方法给子类独有的属性初始化。</p>
+<p>这这意味着什么？不妨先看一段程序。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123; </span><br><span class="line">		System.out.println(<span class="string">&quot;主函数运行&quot;</span>);</span><br><span class="line">		Base1 a = <span class="keyword">new</span> Base1();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">	Base(<span class="keyword">int</span> b)&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;父类构造方法&quot;</span>);</span><br><span class="line">		<span class="keyword">this</span>.a = b;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base1</span> <span class="keyword">extends</span> <span class="title">Base</span></span>&#123;</span><br><span class="line">	Base1()&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;子类构造方法&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>巧了，它编译不过。在笔者的环境中报错如下：</p>
+<blockquote>
+<p>Implicit super constructor Base() is undefined. Must explicitly invoke another constructor</p>
+</blockquote>
+<p>子类实例化要调用父类的构造方法，在默认的情况下它想去调用父类的无参构造方法，也就是Base()，可是它找不到，所以报错了。</p>
+<p>子类构造方法的本质相当于如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Base1()&#123;</span><br><span class="line">	<span class="keyword">super</span>();</span><br><span class="line">	System.out.println(<span class="string">&quot;子类构造方法&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>什么是Super？如果您不理解，请先看下去，后面会讲的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123; </span><br><span class="line">		System.out.println(<span class="string">&quot;主函数运行&quot;</span>);</span><br><span class="line">		Base1 a = <span class="keyword">new</span> Base1();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">	Base(<span class="keyword">int</span> b)&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;父类含参构造方法&quot;</span>);</span><br><span class="line">		<span class="keyword">this</span>.a = b;</span><br><span class="line">	&#125;Base()&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;父类无参构造方法&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base1</span> <span class="keyword">extends</span> <span class="title">Base</span></span>&#123;</span><br><span class="line">	Base1()&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;子类构造方法&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果为之添加一个含参构造方法就可以正常运行。</p>
+<p>疑问：我不想写无参构造函数，能行吗？</p>
+<blockquote>
+<p>可以，使用super()调用父类含参构造方法就行。它总归得在执行子类构造方法前执行一个父类的构造方法，执行哪个是可以被人为决定的。</p>
+</blockquote>
+<p>这样您可以修改Base1()为下面这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Base1()&#123;</span><br><span class="line">		<span class="keyword">super</span>(<span class="number">2</span>);</span><br><span class="line">		System.out.println(<span class="string">&quot;子类构造方法&quot;</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本例中我们为父类构造方法传入了定值2，事实上您也可以传入一个变量。</p>
+<h3 id="3-6-super"><a href="#3-6-super" class="headerlink" title="3.6 super"></a>3.6 super</h3><p>关于super还是要说一下的，super调用父类构造时必须放在子类构造方法的<b>首行</b>上。</p>
+<p>什么是super？super类似于this，只不过this指向的是本身，而super指向的是父类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123; </span><br><span class="line">		Base1 a = <span class="keyword">new</span> Base1();</span><br><span class="line">		a.showa();      <span class="comment">//sub:8</span></span><br><span class="line">		a.showbasea();  <span class="comment">//base:0</span></span><br><span class="line">		a.seta(<span class="number">5</span>);      <span class="comment">//</span></span><br><span class="line">		a.showa();      <span class="comment">//sub:8</span></span><br><span class="line">		a.showbasea();  <span class="comment">//base:5</span></span><br><span class="line">		a.setsuba(<span class="number">7</span>);   <span class="comment">//</span></span><br><span class="line">		a.showbasea();  <span class="comment">//base:5</span></span><br><span class="line">		a.showa();      <span class="comment">//sub:7</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> s = <span class="number">0</span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">seta</span><span class="params">(<span class="keyword">int</span> f)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.s = f;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base1</span> <span class="keyword">extends</span> <span class="title">Base</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> s = <span class="number">8</span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">setsuba</span><span class="params">(<span class="keyword">int</span> f)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.s = f;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">showbasea</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;base:&quot;</span>+<span class="keyword">super</span>.s);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">showa</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;sub:&quot;</span>+<span class="keyword">this</span>.s);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>子类调用父类方法修改的是父类变量</li>
+<li>子类同名变量可以在子类定义的方法处理时变量效果类似于覆盖父类</li>
+<li>第二条的描述只是直观现象，父类仍可以使用super访问到</li>
+</ol>
+<p>类似地，super还可以调用父类的构造方法，比如使用super(int a)调用父类含有一个int的构造函数（如果存在的话）。</p>
+<h2 id="4">4.Java的数组</h2>
+
+<h3 id="4-1-数组的声明"><a href="#4-1-数组的声明" class="headerlink" title="4.1 数组的声明"></a>4.1 数组的声明</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一般可用这几种方式声明</span></span><br><span class="line"><span class="keyword">int</span>[] a= <span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span>[] b = &#123;<span class="number">0</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span>[] c = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">3</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">7</span>&#125;;</span><br><span class="line"><span class="comment">//使用.length获取长度</span></span><br><span class="line">System.out.println(a.length);<span class="comment">//输出2</span></span><br></pre></td></tr></table></figure>
+<p>java允许多维数组每一行的长度不一样</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> intArray[][] = &#123;&#123;<span class="number">1</span>,<span class="number">2</span>&#125;, &#123;<span class="number">11</span>&#125;, &#123;<span class="number">21</span>,<span class="number">22</span>,<span class="number">23</span>&#125;, &#123;<span class="number">31</span>,<span class="number">32</span>,<span class="number">33</span>&#125;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>数组有两种常见异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] b = &#123;<span class="number">0</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">5</span>&#125;;</span><br><span class="line">b = <span class="keyword">null</span>;</span><br><span class="line">System.out.println(b[<span class="number">1</span>]);</span><br><span class="line"><span class="comment">// java.lang.NullPointerException</span></span><br><span class="line">System.out.println(b[<span class="number">4</span>]);</span><br><span class="line"><span class="comment">//java.lang.ArrayIndexOutOfBoundsException</span></span><br></pre></td></tr></table></figure>
+
+<p>中文名称分别是空指针异常和数组索引值越界。</p>
+<p>不规则数组访问和遍历可以使用 for 和 for-each 循环，但要注意下标越界异常发生。</p>
+<h3 id="4-2-常用功能"><a href="#4-2-常用功能" class="headerlink" title="4.2 常用功能"></a>4.2 常用功能</h3><blockquote>
+<p>Arrays的相关功能需要import java.util.Arrays;</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//tostring是把数组内容转换为字符串显示的方法</span></span><br><span class="line"><span class="keyword">int</span>[] b = &#123;<span class="number">0</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">5</span>&#125;;</span><br><span class="line">Arrays.sort(b);<span class="comment">//排序</span></span><br><span class="line">System.out.println(Arrays.toString(b));</span><br><span class="line"><span class="comment">//输出[0, 5, 8, 9]</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="5">5.Java的面向对象</h2>
 
 <p>封装、多态、继承的特性<br>向上转型、向下转型<br>String类、   equals（）比较<br>方法重载、方法重写各自的特点以及相互的区别<br>抽象类的继承<br>接口的实现方法<br>内部类的定义及使用</p>
-<h2 id="5">5.Java的窗体设计类JFrame</h2>
-
-<blockquote>
-<p>使用窗体设计类JFrame设计相关功能的窗体，您需要import javax.swing.JFrame;</p>
+<h3 id="5-1-面向对象"><a href="#5-1-面向对象" class="headerlink" title="5.1 面向对象"></a>5.1 面向对象</h3><blockquote>
+<p>面向对象老生常谈三大特性：封装、继承、多态</p>
 </blockquote>
+<h3 id="5-1-封装"><a href="#5-1-封装" class="headerlink" title="5.1 封装"></a>5.1 封装</h3><blockquote>
+<p>为了“隐藏细节”和“数据安全”利用抽象数据类型把数据和基于数据的操作封装起来，使其成为一个不可分割的整体，数据隐藏在抽象数据内部，尽可能的隐藏数据细节，只保留一些接口使其与外界发生联系。也就是说用户无需知道内部的数据和方法的具体实现细节，只需根据留在外部的接口进行操作就行。</p>
+</blockquote>
+<p>典型实现：private修饰的数据+public修饰的get、set方法。</p>
+<h3 id="5-2-继承"><a href="#5-2-继承" class="headerlink" title="5.2 继承"></a>5.2 继承</h3><blockquote>
+<p>多个类具有共同的属性（成员变量）与行为（成员方法）的时候，将这些共同的部分抽取出来定义到一个公共的类中，其他及各类可以与这个公共的类形成继承关系，从而在多个类中不需要重复定义公共部分!这个公共的类就是父类，也称为超类或者基类，其他的类就是子类。</p>
+</blockquote>
+<ol>
+<li>父类的私有属性和构造方法并不能被继承。</li>
+<li>子类可以重写父类的方法</li>
+<li>子类必须先完成父类的初始化才能初始化</li>
+</ol>
+<h3 id="5-3-多态"><a href="#5-3-多态" class="headerlink" title="5.3 多态"></a>5.3 多态</h3><blockquote>
+<p>多个类别实例调用一个同名方法却有不同实现。即一个抽象的行为对于不同的个体有不同的实现。</p>
+</blockquote>
+<p>多态依托封装和继承实现，也必然涉及到方法的重写。</p>
+<h3 id="5-4-重写和重载的区别"><a href="#5-4-重写和重载的区别" class="headerlink" title="5.4 重写和重载的区别"></a>5.4 重写和重载的区别</h3><table>
+<thead>
+<tr>
+<th>名字</th>
+<th>英文</th>
+<th>区别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>重载</td>
+<td>Overloading</td>
+<td>多个同名函数同时存在，具有不同的参数个数/类型</td>
+</tr>
+<tr>
+<td>重写</td>
+<td>Overriding</td>
+<td>子类中定义某方法与其父类有相同的名称和参数</td>
+</tr>
+</tbody></table>
+<p>建议重写函数上一行加上前加上@Override，类似于下面所示代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">functionname</span><span class="params">(params a)</span></span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不加没有影响，加了更加清晰。</p>
+<p>以下代码示例的java的多态。Base类对象能够正确的使用print()函数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123; </span><br><span class="line">		Base a = <span class="keyword">new</span> Base1();</span><br><span class="line">		a.print();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;父类函数&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base1</span> <span class="keyword">extends</span> <span class="title">Base</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;子类函数&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重写的特点：</p>
+<ol>
+<li>覆盖的方法的标志必须要和被覆盖的方法的标志完全匹配，才能达到覆盖的效果；</li>
+<li>覆盖的方法的返回值必须和被覆盖的方法的返回一致；</li>
+<li>覆盖的方法所抛出的异常必须和被覆盖方法的所抛出的异常一致，或者是其子类；</li>
+<li>被覆盖的方法不能为private，否则在其子类中只是新定义了一个方法，并没有对其进行覆盖。</li>
+</ol>
+<p>静态方法和静态属性不能被重写，只能被继承。</p>
+<h3 id="5-5-动态绑定与静态绑定"><a href="#5-5-动态绑定与静态绑定" class="headerlink" title="5.5 动态绑定与静态绑定"></a>5.5 动态绑定与静态绑定</h3><p>提及重写就不得不提动态绑定，动态绑定仅针对对象的方法而言。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>静态绑定</td>
+<td>程序编译期的绑定</td>
+</tr>
+<tr>
+<td>动态绑定</td>
+<td>在运行时根据具体对象的类型进行绑定</td>
+</tr>
+</tbody></table>
+<p>动态绑定的实现依靠JVM维持的一个叫做方法表的数据结构。</p>
 <h2 id="6">6.Java的异常（exception）</h2>
 
 <h3 id="6-1-异常的分类"><a href="#6-1-异常的分类" class="headerlink" title="6.1 异常的分类"></a>6.1 异常的分类</h3><p>异常处理被设计用于保证代码的质量，降低后期维护的难度和便于开发过程中的测试。</p>
@@ -825,6 +1037,11 @@ C[Exception] --> E[checked exception]</pre>
 <p>请区分throws和throw的区别，它俩是不一样的。</p>
 </blockquote>
 <p>throws表示出现异常的一种可能性，并不一定会发生这些异常。这些异常将交由该方法的调用者处理，并且允许throws后面跟多个异常类型。</p>
+<h2 id="7">7.Java的窗体设计类JFrame</h2>
+
+<blockquote>
+<p>使用窗体设计类JFrame设计相关功能的窗体，您需要import javax.swing.JFrame;</p>
+</blockquote>
 
       </div>
       <div class="post-tags-categories">
@@ -846,7 +1063,7 @@ C[Exception] --> E[checked exception]</pre>
     </li>
     <li class="post-copyright-link">
     <strong>link:  </strong>
-    <a href="/2021/12/20/NoteofJava/" target="_blank" title="基础|Java期末复习笔记（未完成）">https://nszjjj.github.io/2021/12/20/NoteofJava/</a>
+    <a href="/2021/12/24/NoteofJava/" target="_blank" title="基础|Java期末复习笔记（未完成）">https://nszjjj.github.io/2021/12/24/NoteofJava/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright notice:   </strong>
