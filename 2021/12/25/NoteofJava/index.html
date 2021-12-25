@@ -492,7 +492,7 @@
     
       
         <span class="post-detail-header_date">
-          <i class="fas fa-calendar"></i> Published in：2021-12-24 |
+          <i class="fas fa-calendar"></i> Published in：2021-12-25 |
         </span>
       
 
@@ -639,6 +639,8 @@
 <td>流对象不可以继续使用</td>
 </tr>
 </tbody></table>
+<p>此外，字节流读的是二进制数据，字符流是已经把二进制数据转化为了字符（但是有些二进制数据未必能按照字符解释对吧？比如说图像数据）。</p>
+<p>所以文本文件用字符流为宜，其他文件诸如音视频等采用字节流。</p>
 <h3 id="2-3-文件读写的前置知识"><a href="#2-3-文件读写的前置知识" class="headerlink" title="2.3 文件读写的前置知识"></a>2.3 文件读写的前置知识</h3><blockquote>
 <p>前置知识点：主函数后面跟着的throws IOException含义</p>
 </blockquote>
@@ -650,6 +652,15 @@
 <blockquote>
 <p>前置知识点：绝对路径与相对路径</p>
 </blockquote>
+<p>假设您的工程文件结构如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">┬project</span><br><span class="line">├bin</span><br><span class="line">├lib</span><br><span class="line">└src</span><br></pre></td></tr></table></figure>
+<p>并且priject文件夹目录是D:/project</p>
+<p>那么绝对路径就是D:/project</p>
+<p>相对路径是JVM虚拟机启动的路径，为了运行该工程，会在project文件夹启动，使用./代表它，此时表示的路径和D:/project是等价的。</p>
+<p>类似地，为了访问放有.java文件的scr文件夹，您可以使用D:/project/bin或者./bin</p>
+<p>并且，\和/多数情况下是等价的，也就是说您可以使用D:\project\bin</p>
+<p>一般本地文件两个斜杠是等价的，网络相关请使用斜杠</p>
+<p>我们创建一个a1.txt并且不显式指明路径时，缺省路径就是相对路径，也就是会在project中创建一个a1.txt，其绝对路径是D:/project/a1.txt</p>
 <h3 id="2-4-文件File类"><a href="#2-4-文件File类" class="headerlink" title="2.4 文件File类"></a>2.4 文件File类</h3><blockquote>
 <p>作为输入流的文件必须存在，否则会抛出异常。作为输出流的文件不一定需要存在，没有就会被自动创建一个。</p>
 </blockquote>
@@ -690,7 +701,28 @@
 <td>重命名</td>
 </tr>
 </tbody></table>
-<h3 id="2-5文件读写"><a href="#2-5文件读写" class="headerlink" title="2.5文件读写"></a>2.5文件读写</h3><h2 id="3">3.Java的代码结构</h2>
+<h3 id="2-5文件读写"><a href="#2-5文件读写" class="headerlink" title="2.5文件读写"></a>2.5文件读写</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span>  </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            BufferedWriter out = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(<span class="string">&quot;test.txt&quot;</span>));</span><br><span class="line">            out.write(<span class="string">&quot;这段话是txt文件内写入的内容。&quot;</span>);</span><br><span class="line">            out.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>于是我们在工程根目录获得了test.txt并且其中有这样一段（不包括引号）内容：“这段话是txt文件内写入的内容。”</p>
+<p>写入文件必然涉及编码转换问题（转换为二进制才能写入文件），使用buffer缓冲并一次性转换效率高于即时写入。缓冲流本身并不具备读或者写的功能，它的作用其实是为其他流加速。</p>
+<p>关于BufferedWriter的解释：</p>
+<ol>
+<li>是一种缓冲流</li>
+<li>一般<b>套接在FileWriter</b>上使用</li>
+</ol>
+<p>类似地读文件采用BufferReader</p>
+<ol>
+<li>是一种缓冲流</li>
+<li>一般<b>套接在FileReader</b>上使用</li>
+<li>由Reader类扩展而来，提供通用的缓冲方式文本读取</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span>  </span>&#123;</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">&quot;test.txt&quot;</span>));</span><br><span class="line">			String s = br.readLine();</span><br><span class="line">			System.out.println(s);<span class="comment">//输出：这段话是txt文件内写入的内容。</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还记得我们读取键盘输入的Scanner吗？</p>
+<p>您可以这样改写它：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span>  </span>&#123;</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(System.in);</span><br><span class="line">			BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</span><br><span class="line">			String s = br.readLine();</span><br><span class="line">			System.out.println(s);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们将InputStreamReader套接在了System.in，又将BufferReader套接在了InputStreamReader，通过有缓冲的方式读取System.in，也就是键盘是的内容，并且原封不动显示出来。</p>
+<h2 id="3">3.Java的代码结构</h2>
 
 <h3 id="3-1-静态代码块"><a href="#3-1-静态代码块" class="headerlink" title="3.1 静态代码块"></a>3.1 静态代码块</h3><blockquote>
 <p>核心要义：静态代码块随着类的加载而执行，而且只执行一次</p>
@@ -1037,11 +1069,51 @@ C[Exception] --> E[checked exception]</pre>
 <p>请区分throws和throw的区别，它俩是不一样的。</p>
 </blockquote>
 <p>throws表示出现异常的一种可能性，并不一定会发生这些异常。这些异常将交由该方法的调用者处理，并且允许throws后面跟多个异常类型。</p>
-<h2 id="7">7.Java的窗体设计类JFrame</h2>
+<h2 id="7">7.Java的窗体设计</h2>
 
-<blockquote>
-<p>使用窗体设计类JFrame设计相关功能的窗体，您需要import javax.swing.JFrame;</p>
+<h3 id="7-1-基础示例"><a href="#7-1-基础示例" class="headerlink" title="7.1 基础示例"></a>7.1 基础示例</h3><blockquote>
+<p>使用顶层容器JFrame设计窗体，您需要import javax.swing.JFrame。具有Swing GUI的应用必须至少拥有一个顶层容器。</p>
 </blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.swing.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123; </span><br><span class="line">		<span class="comment">//新建JFrame</span></span><br><span class="line">		JFrame frame = <span class="keyword">new</span> JFrame(<span class="string">&quot;no title&quot;</span>);</span><br><span class="line">		<span class="comment">//设置JFrame的大小</span></span><br><span class="line">		frame.setSize(<span class="number">480</span>, <span class="number">320</span>);</span><br><span class="line">		<span class="comment">//设置JFrame居中</span></span><br><span class="line">		frame.setLocationRelativeTo(<span class="keyword">null</span>);</span><br><span class="line">		<span class="comment">//设置当框架关闭时结束程序</span></span><br><span class="line">		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span><br><span class="line">		<span class="comment">//设置JFrame可见</span></span><br><span class="line">		frame.setVisible(<span class="keyword">true</span>);</span><br><span class="line">		<span class="comment">//创建按钮</span></span><br><span class="line">		JButton button = <span class="keyword">new</span> JButton(<span class="string">&quot;text&quot;</span>);</span><br><span class="line">		<span class="comment">//向frame中添加一个按钮</span></span><br><span class="line">		frame.add(button);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过上述代码，可以在屏幕中央获得一个大小为480*320的窗口，并且有一个按钮填满其中，按钮上显示的文字是”text”。</p>
+<h3 id="7-2-布局方式"><a href="#7-2-布局方式" class="headerlink" title="7.2 布局方式"></a>7.2 布局方式</h3><table>
+<thead>
+<tr>
+<th>布局</th>
+<th>方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FlowLayout流式布局</td>
+<td>从左到右，从上到下逐行摆放</td>
+</tr>
+<tr>
+<td>GridLayout网格布局</td>
+<td>容器划分为m行n列的单元格，每个单元格容纳一个组件</td>
+</tr>
+<tr>
+<td>BorderLayout边框布局</td>
+<td>按照相对方位摆放，比如说摆在“北边”</td>
+</tr>
+<tr>
+<td>CradLayout卡片布局</td>
+<td>类似于一摞牌，只有最上面的可以显示（或者想象成图层）</td>
+</tr>
+<tr>
+<td>GridBagLayout网格包布局</td>
+<td>网格布局升级版，允许合并单元格和设置格中相对位置</td>
+</tr>
+<tr>
+<td>BoxLayout箱式布局</td>
+<td>垂直摆一列或者横着码一行</td>
+</tr>
+</tbody></table>
+<ol>
+<li>以上六种布局无法手动设置组件大小与位置</li>
+<li>为了手动设置组件大小和位置请使用setLayout(null)</li>
+<li>CradLayout一般使用Panel作为中间组件，容纳不同的布局，然后在不同Panel之间切换</li>
+</ol>
 
       </div>
       <div class="post-tags-categories">
@@ -1063,7 +1135,7 @@ C[Exception] --> E[checked exception]</pre>
     </li>
     <li class="post-copyright-link">
     <strong>link:  </strong>
-    <a href="/2021/12/24/NoteofJava/" target="_blank" title="基础|Java期末复习笔记（未完成）">https://nszjjj.github.io/2021/12/24/NoteofJava/</a>
+    <a href="/2021/12/25/NoteofJava/" target="_blank" title="基础|Java期末复习笔记（未完成）">https://nszjjj.github.io/2021/12/25/NoteofJava/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright notice:   </strong>
