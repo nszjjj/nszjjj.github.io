@@ -1117,6 +1117,72 @@ C[Exception] --> E[checked exception]</pre>
 <li>为了手动设置组件大小和位置请使用setLayout(null)</li>
 <li>CradLayout一般使用Panel作为中间组件，容纳不同的布局，然后在不同Panel之间切换</li>
 </ol>
+<h2 id="8-杂项"><a href="#8-杂项" class="headerlink" title="8 杂项"></a>8 杂项</h2><h3 id="8-1-接口"><a href="#8-1-接口" class="headerlink" title="8.1 接口"></a>8.1 接口</h3><blockquote>
+<p>c++抽象类，见过不？差不多的东西，它也具有一大部分类的特征，比如说可以有方法和属性。但是接口只是定义方法的输入输出啥的特征，不规定如何具体实现。</p>
+</blockquote>
+<p>接口只包括常量和抽象方法</p>
+<ul>
+<li>常量: 默认使用 public static final</li>
+<li>方法: 默认使用 public abstract</li>
+</ul>
+<p>关于抽象方法：抽象方法只能存在于抽象类或者接口中，但抽象类中却能存在非抽象方法，即有方法体的方法。接口是百分之百的抽象类</p>
+<p>Java提供了一个用于比较的接口Comparable</p>
+<p>接口和抽象类的区别：抽象类内部可能包含非final的变量，但是在接口中存在的变量一定是final，public,static的。</p>
+<p>您需要注意如下内容：</p>
+<ol>
+<li>接口单放一个.java文件且与文件名同名</li>
+<li>实现接口内部的方法，必须要有public关键字（不写，就是private，不能给它访问性降级）</li>
+<li>接口中final修饰的变量自带static属性（即便你没有写出来static)</li>
+<li>final修饰的方法不能够被子类重写</li>
+<li>接口可以多继承</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//in1.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">in1</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> a = <span class="number">2</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//test.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(d.a);</span><br><span class="line">        in1 e = <span class="keyword">new</span> d();<span class="comment">//这里使用in1是为了演示使用一个接口引用指向对象也是可以的</span></span><br><span class="line">        e.display();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">d</span> <span class="keyword">implements</span> <span class="title">in1</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<blockquote>
+<p>2<br>2</p>
+</blockquote>
+<h3 id="8-2-抽象类"><a href="#8-2-抽象类" class="headerlink" title="8.2 抽象类"></a>8.2 抽象类</h3><blockquote>
+<p>一个类只能继承一个抽象类，而一个类却可以实现多个接口。</p>
+</blockquote>
+<ol>
+<li>任何子类必须重写父类的抽象方法，或者声明自身为抽象类。</li>
+<li>抽象类不能实例化对象</li>
+<li>abstract修饰的方法不要写函数体</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        noabc s = <span class="keyword">new</span> noabc();</span><br><span class="line">        s.print();<span class="comment">//输出：0</span></span><br><span class="line">        s.add(<span class="number">2</span>);</span><br><span class="line">        s.print();<span class="comment">//输出：2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">abc</span></span>&#123;</span><br><span class="line">    <span class="comment">//抽象类</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">noabc</span> <span class="keyword">extends</span> <span class="title">abc</span></span>&#123;</span><br><span class="line">    <span class="comment">//子类，非抽象类</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> d)</span></span>&#123;</span><br><span class="line">        a+=d;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3-向下转型、向上转型"><a href="#8-3-向下转型、向上转型" class="headerlink" title="8.3 向下转型、向上转型"></a>8.3 向下转型、向上转型</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>向上转型</td>
+<td>父类引用指向子类对象并调用父类中定义的方法和变量</td>
+</tr>
+<tr>
+<td>向下转型</td>
+<td>调用子类特有的属性/方法</td>
+</tr>
+</tbody></table>
+<p>摘一段csdn网友 @油炸小波 的</p>
+<p>如父类Animal，子类Cat,Dog。其中Animal可以是类也可以是接口，Cat和Dog是继承或实现Animal的子类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Animal animal = <span class="keyword">new</span> Cat();</span><br></pre></td></tr></table></figure>
+<p>声明的是父类，实际指向的是子类的一个对象。</p>
+<p>理解多态，首先要知道“向上转型”。</p>
+<p>我定义了一个子类Cat，它继承了Animal类，那么后者就是前者是父类。我可以通过</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cat c = <span class="keyword">new</span> Cat();</span><br></pre></td></tr></table></figure>
+<p>实例化一个Cat的对象，这个不难理解。但当我这样定义时：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Animal a = <span class="keyword">new</span> Cat();</span><br></pre></td></tr></table></figure>
+<p>这代表什么意思呢？ 很简单，它表示我定义了一个Animal类型的引用，指向新建的Cat类型的对象。</p>
+<p>由于Cat是继承自它的父类Animal，所以Animal类型的引用是可以指向Cat类型的对象的。这就是“向上转型”。</p>
+<p>那么这样做有什么意义呢？因为子类是对父类的一个改进和扩充，所以一般子类在功能上较父类更强大，属性较父类更独特</p>
+<p>定义一个父类类型的引用指向一个子类的对象既可以使用子类强大的功能，又可以抽取父类的共性。</p>
+<p>所以，父类类型的引用可以调用父类中定义的所有属性和方法，而对于子类中定义而父类中没有的方法， 父类引用是无法调用的 ；</p>
+<p>【具体的意思就是：现在Cat继承自Animal，Cat里面对于父类的方法进行了扩充和更强大的定义，通过向上转型调用这些强大的方法，但是对于子类定义父类没有的方法，向上转型不能使用】</p>
 
       </div>
       <div class="post-tags-categories">
