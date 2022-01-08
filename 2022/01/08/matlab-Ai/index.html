@@ -549,7 +549,7 @@
     5[输入n]--wn-->4[加权求和]
     6[b]--->4[加权求和]
     4[加权求和]-->7[传输函数]
-    7[传输函数]-->output</pre>
+    7[传输函数]-->8[output]x</pre>
 
 <p>注释：wn是权值，b是偏差，传输函数多为阈值函数</p>
 <h3 id="关于感知器的生成函数"><a href="#关于感知器的生成函数" class="headerlink" title="关于感知器的生成函数"></a>关于感知器的生成函数</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">net = newp(pr,s,tf,lf)</span><br><span class="line"><span class="comment">%net 接收newp的返回值(即一个感知器网络)</span></span><br><span class="line"><span class="comment">%pr  R*2的矩阵，由R维输入向量每维最小值和最大值构成</span></span><br><span class="line"><span class="comment">%s   神经元个数</span></span><br><span class="line"><span class="comment">%tf  传递函数，默认hardlim，此外还可选hardlims</span></span><br><span class="line"><span class="comment">%lf  感知器的学习函数，默认learnp，可选learnpn</span></span><br></pre></td></tr></table></figure>
